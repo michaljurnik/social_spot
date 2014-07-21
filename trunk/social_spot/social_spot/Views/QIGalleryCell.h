@@ -11,5 +11,8 @@
 @interface QIGalleryCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *pictureView;
+@property (nonatomic) BOOL isSelected;
+
+- (void)changeIsSelected;
 
 @end

@@ -11,6 +11,7 @@
 #import "QIGalleryViewController.h"
 #import "QILayoutViewController.h"
 #import "QIShareViewController.h"
+#import "QIFrameViewController.h"
 
 @interface QIPageContainerViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 

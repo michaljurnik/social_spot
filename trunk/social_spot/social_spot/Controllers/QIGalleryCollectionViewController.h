@@ -12,4 +12,7 @@
 
 @interface QIGalleryCollectionViewController : UICollectionViewController
 
+@property (nonatomic, strong) IBOutlet UICollectionView *cv;
+@property (nonatomic) NSIndexPath *scrollPath;
+
 @end

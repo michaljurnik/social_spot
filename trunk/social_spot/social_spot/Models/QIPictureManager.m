@@ -30,33 +30,54 @@ static QIPictureManager *sharedManager = nil;
     
     if (self) {
         [self loadPictures];
+        _selectedPictures = [[NSMutableArray alloc] initWithCapacity:5];
     }
     
     return self;
 }
 
 - (void)loadPictures {
-    _pictures = @[[UIImage imageNamed:@"1.png"],
-                  [UIImage imageNamed:@"2.png"],
-                  [UIImage imageNamed:@"3.png"],
-                  [UIImage imageNamed:@"4.png"],
-                  [UIImage imageNamed:@"5.png"],
-                  [UIImage imageNamed:@"6.png"],
-                  [UIImage imageNamed:@"7.png"],
-                  [UIImage imageNamed:@"1.png"],
-                  [UIImage imageNamed:@"2.png"],
-                  [UIImage imageNamed:@"3.png"],
-                  [UIImage imageNamed:@"4.png"],
-                  [UIImage imageNamed:@"5.png"],
-                  [UIImage imageNamed:@"6.png"],
-                  [UIImage imageNamed:@"7.png"],
-                  [UIImage imageNamed:@"1.png"],
-                  [UIImage imageNamed:@"2.png"],
-                  [UIImage imageNamed:@"3.png"],
-                  [UIImage imageNamed:@"4.png"],
-                  [UIImage imageNamed:@"5.png"],
-                  [UIImage imageNamed:@"6.png"],
-                  [UIImage imageNamed:@"7.png"]];
+    _pictures = @[[UIImage imageNamed:@"1.jpg"],
+                  [UIImage imageNamed:@"2.jpg"],
+                  [UIImage imageNamed:@"3.jpg"],
+                  [UIImage imageNamed:@"4.jpg"],
+                  [UIImage imageNamed:@"5.jpg"],
+                  [UIImage imageNamed:@"6.jpg"],
+                  [UIImage imageNamed:@"7.jpg"],
+                  [UIImage imageNamed:@"8.jpg"],
+                  [UIImage imageNamed:@"9.jpg"],
+                  [UIImage imageNamed:@"10.jpg"],
+                  [UIImage imageNamed:@"11.jpg"],
+                  [UIImage imageNamed:@"12.jpg"],
+                  [UIImage imageNamed:@"13.jpg"],
+                  [UIImage imageNamed:@"14.jpg"],
+                  [UIImage imageNamed:@"15.jpg"],
+                  [UIImage imageNamed:@"16.jpg"],
+                  [UIImage imageNamed:@"17.jpg"]];
+}
+
+- (void)picutreTapped:(NSIndexPath *)indexPath {
+    if (![self removeSelectedPictures:indexPath]) {
+        [self addSelectedPictures:indexPath];
+    }
+}
+
+- (void)addSelectedPictures:(NSIndexPath *)indexPath {
+    [_selectedPictures addObject:[_pictures objectAtIndex:indexPath.row]];
+}
+
+- (BOOL)removeSelectedPictures:(NSIndexPath *)indexPath {
+    UIImage *selectedImage = [_pictures objectAtIndex:indexPath.row];
+    
+    for (UIImage *image in _selectedPictures) {
+        if ([image isEqual:selectedImage]) {
+            [_selectedPictures removeObject:image];
+            
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 - (UIImage *)imageWithView:(UIView *)view {
@@ -70,6 +91,13 @@ static QIPictureManager *sharedManager = nil;
     _picture = img;
     
     return img;
+}
+
+- (void)removeAllSelectedData {
+    [_selectedPictures removeAllObjects];
+    _selectedFrame = 0;
+    _selectedLayout = 0;
+    _languageID = 1;
 }
 
 @end

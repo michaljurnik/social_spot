@@ -39,6 +39,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextPage:) name:NOTIFICATION_NEXT_PAGE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(previousPage:) name:NOTIFICATION_PREVIOUS_PAGE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(swipeToFirst:) name:NOTIFICATION_SHARE_COMPLETE object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -71,6 +72,12 @@
     });
 }
 
+- (void)swipeToFirst:(NSDictionary *)userInfo {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_pageViewController setViewControllers:@[[self viewControllerAtIndex:0]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+    });
+}
+
 - (NSInteger)indexOfPage:(UIViewController *)viewController {
     if ([[viewController class]  isEqual:[QIIntroViewController class]]) {
         return 0;
@@ -84,8 +91,12 @@
         return 2;
     }
     
-    if ([[viewController class] isEqual:[QIShareViewController class]]) {
+    if ([[viewController class] isEqual:[QIFrameViewController class]]) {
         return 3;
+    }
+    
+    if ([[viewController class] isEqual:[QIShareViewController class]]) {
+        return 4;
     }
     
     return 0;
@@ -97,7 +108,7 @@
     NSUInteger index = ((QIPageContentViewController *)viewController).pageIndex;
     
     if (index == 0) {
-        index = 4;
+        index = 5;
     }
     else if (index == NSNotFound) {
         return nil;
@@ -110,7 +121,7 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
     NSUInteger index = ((QIPageContentViewController *) viewController).pageIndex;
     
-    if (index == 4) {
+    if (index == 5) {
         index = -1;
     }
     else if (index == NSNotFound) {
@@ -137,6 +148,9 @@
             break;
         case 3:
             contentViewController = [storybord instantiateViewControllerWithIdentifier:FOURTH_VIEW_CONTROLLER];
+            break;
+        case 4:
+            contentViewController = [storybord instantiateViewControllerWithIdentifier:FIFTH_VIEW_CONTROLLER];
             break;
         default:
             contentViewController = [storybord instantiateViewControllerWithIdentifier:FIRST_VIEW_CONTROLLER];

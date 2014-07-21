@@ -37,4 +37,8 @@
     self.contentOffset = CGPointMake(self.frame.size.width * indexPath.row, 0);
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end
